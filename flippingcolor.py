@@ -57,7 +57,6 @@ def InitBoard():
     global WRITER
     WRITER = turtle.Turtle()
     WRITER.hideturtle()
-    WRITER.color("orange")
 
     # define whether a tile is selected from the game board
     global CHOSEN
@@ -108,8 +107,13 @@ def WinCheck():
                 return False
     return True
 
+def void(*args, **kwargs):
+    pass
+
 def ResetGame():
     WRITER.clear()
+    SCREEN.onkey(void, "q")
+    SCREEN.onkey(void, "r")
     # reload game board
     global BOARD
     BOARD = [[random.randint(1, 5) for _ in range(5)] for _ in range(5)]
@@ -142,6 +146,7 @@ def ClickEvent(x, y):
                         TILELIST[i][j].color(COLORSET.get(BOARD[i][j]))
                 SCREEN.update()
                 if(WinCheck()):
+                    WRITER.color("orange")
                     WRITER.penup()
                     WRITER.goto(0, -240)
                     WRITER.write("CONGRATULATIONS!",align="center",\
@@ -149,7 +154,7 @@ def ClickEvent(x, y):
                     WRITER.color("gray")
                     WRITER.penup()
                     WRITER.goto(0, -360)
-                    WRITER.write("press \"q\" to quit\npress \"r\" to restart",\
+                    WRITER.write("press \"r\" to restart\npress \"q\" to quit",\
                         align="center",font=("Consolas", 24, "normal"))
                     SCREEN.update()
                     SCREEN.onkey(SCREEN.bye, "q")
