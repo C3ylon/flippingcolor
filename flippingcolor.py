@@ -148,7 +148,8 @@ def ClickEvent(x, y):
                     WRITER.color("orange")
                     WRITER.penup()
                     WRITER.goto(0, -240)
-                    WRITER.write("CONGRATULATIONS!",align="center",font=("Arial", 30, ("bold","italic")))
+                    WRITER.write("CONGRATULATIONS!",align="center",\
+                        font=("Arial", 30, ("bold","italic")))
                     WRITER.color("gray")
                     WRITER.penup()
                     WRITER.goto(0, -360)
