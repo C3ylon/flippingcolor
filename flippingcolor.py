@@ -15,6 +15,7 @@ def InitBoard():
     global SCREEN
     SCREEN = turtle.Screen()
     SCREEN.title("Flipping Color")
+    SCREEN.bgcolor("#FAFFF0")
     SCREEN.onclick(ClickEvent)
     SCREEN.tracer(False)
 
@@ -24,10 +25,33 @@ def InitBoard():
     basetile.shapesize(2)
     basetile.penup()
 
+    # write title
+    _title = turtle.Turtle()
+    _title.hideturtle()
+    _title.color("orange")
+    _title.penup()
+    _title.goto(0, 280)
+    _title.write("Flipping Color",align="center",font=("Elephant", 36, ("bold","italic")))
+
+    # print color set outline
+    _outline = turtle.Turtle()
+    _outline.hideturtle()
+    _outline.color("#FFE384")
+    _outline.width(10)
+    _outline.penup()
+    _outline.goto(-125, -95)
+    _outline.pendown()
+    for _ in range(5):
+        for __ in range(4):
+            _outline.forward(50)
+            _outline.right(90)
+        _outline.forward(50)
+
     # set selected tile's outline properties
     global OUTLINE
     OUTLINE = turtle.Turtle()
     OUTLINE.hideturtle()
+    OUTLINE.color("#082E54")
     OUTLINE.width(10)
 
     # define whether a tile is selected from the game board
@@ -84,6 +108,15 @@ def WinCheck():
                 return False
     return True
 
+def ResetGame():
+    WRITER.clear()
+    global BOARD
+    BOARD = [[random.randint(1, 5) for _ in range(5)] for _ in range(5)]
+    for i in range(5):
+        for j in range(5):
+            TILELIST[i][j].color(COLORSET.get(BOARD[i][j]))
+    SCREEN.update()
+
 def ClickEvent(x, y):
     global CHOSEN, I_CHOSEN, J_CHOSEN
 
@@ -108,23 +141,27 @@ def ClickEvent(x, y):
                         TILELIST[i][j].color(COLORSET.get(BOARD[i][j]))
                 SCREEN.update()
                 if(WinCheck()):
-                    writer = turtle.Turtle()
-                    writer.hideturtle()
-                    writer.color("orange")
-                    writer.penup()
-                    writer.goto(0, -240)
-                    writer.write("CONGRATULATIONS!",align="center",font=("Arial", 30, ("bold","italic")))
-                    writer.color("gray")
-                    writer.penup()
-                    writer.goto(0, -280)
-                    writer.write("press ESC to quit",align="center",font=("Arial", 24, "normal"))
+                    global WRITER
+                    WRITER = turtle.Turtle()
+                    WRITER.hideturtle()
+                    WRITER.color("orange")
+                    WRITER.penup()
+                    WRITER.goto(0, -240)
+                    WRITER.write("CONGRATULATIONS!",align="center",font=("Arial", 30, ("bold","italic")))
+                    WRITER.color("gray")
+                    WRITER.penup()
+                    WRITER.goto(0, -360)
+                    WRITER.write("press \"q\" to quit\npress \"r\" to restart",\
+                        align="center",font=("Consolas", 24, "normal"))
                     SCREEN.update()
-                    SCREEN.onkey(SCREEN.bye, "Escape")
+                    SCREEN.onkey(SCREEN.bye, "q")
+                    SCREEN.onkey(ResetGame, "r")
                     SCREEN.listen()
 
     # if click in blank area： 
     else:
         UnpaintOutline()
+        CHOSEN = False
 
 def FlipTile(i, j, colornum):
     state = [[0]*5 for _ in range(5)]
