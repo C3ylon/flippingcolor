@@ -42,7 +42,7 @@ def InitBoard():
     _outline.goto(-125, -95)
     _outline.pendown()
     for _ in range(5):
-        for __ in range(4):
+        for _ in range(4):
             _outline.forward(50)
             _outline.right(90)
         _outline.forward(50)
@@ -110,6 +110,7 @@ def WinCheck():
 
 def ResetGame():
     WRITER.clear()
+    # reload game board
     global BOARD
     BOARD = [[random.randint(1, 5) for _ in range(5)] for _ in range(5)]
     for i in range(5):
