@@ -54,6 +54,11 @@ def InitBoard():
     OUTLINE.color("#082E54")
     OUTLINE.width(10)
 
+    global WRITER
+    WRITER = turtle.Turtle()
+    WRITER.hideturtle()
+    WRITER.color("orange")
+
     # define whether a tile is selected from the game board
     global CHOSEN
     CHOSEN = False
@@ -85,16 +90,11 @@ def PaintOutline(i, j):
 
     global OUTLINE
     OUTLINE.penup()
-    OUTLINE.goto(-75+j*50, 180-i*50)
+    OUTLINE.goto(-125+j*50, 205-i*50)
     OUTLINE.pendown()
-    OUTLINE.right(90)
-    OUTLINE.forward(25)
-    for _ in range(3):
-        OUTLINE.right(90)
+    for _ in range(4):
         OUTLINE.forward(50)
-    OUTLINE.right(90)
-    OUTLINE.forward(25)
-    OUTLINE.left(90)
+        OUTLINE.right(90)
 
 def UnpaintOutline():
     global OUTLINE
@@ -142,10 +142,6 @@ def ClickEvent(x, y):
                         TILELIST[i][j].color(COLORSET.get(BOARD[i][j]))
                 SCREEN.update()
                 if(WinCheck()):
-                    global WRITER
-                    WRITER = turtle.Turtle()
-                    WRITER.hideturtle()
-                    WRITER.color("orange")
                     WRITER.penup()
                     WRITER.goto(0, -240)
                     WRITER.write("CONGRATULATIONS!",align="center",\
